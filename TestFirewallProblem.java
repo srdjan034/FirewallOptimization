@@ -1,3 +1,4 @@
+package parallel.examples;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +12,13 @@ import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.variable.Permutation;
 
+
+
 public class TestFirewallProblem {
 
 	public static void main(String[] args) throws IOException, InterruptedException 
 	{
+		String port = "16801";
 		
 		//check if the executable exists
 		File file = new File("./examples/dtlz2_socket.exe");
@@ -32,7 +36,8 @@ public class TestFirewallProblem {
 		}
 				
 		//run the executable and wait one second for the process to startup
-		Process pb = new ProcessBuilder(file.toString()).start();
+		Process pb = new ProcessBuilder(file.toString(), port).start();
+		
 		Thread.sleep(1000);
 		
 		try 
@@ -41,8 +46,7 @@ public class TestFirewallProblem {
 			NondominatedPopulation result = new Executor()
 							.withProblemClass(FirewallProblem.class)
 							.withAlgorithm("NSGAII")
-							.withMaxEvaluations(30000)
-							.withProperty("populationSize", 50)
+							.withMaxEvaluations(10000)
 							.distributeOnAllCores()
 							.run();
 			
@@ -63,7 +67,7 @@ public class TestFirewallProblem {
 		} 
 		catch (Exception e) 
 		{
-			System.out.println(e.getMessage());
+			System.out.println("Greska : " + e.getMessage());
 			
 			// U slucaju greske procitaj poruke iz konzole c++-a
 			InputStream is = pb.getInputStream();
@@ -72,9 +76,10 @@ public class TestFirewallProblem {
 									
 			String line = null;
 			while((line = br.readLine()) != null)
-				System.out.println(line);
-			
+				System.out.println("\n" + line);
 		}
+		
+
 
 	}
 
