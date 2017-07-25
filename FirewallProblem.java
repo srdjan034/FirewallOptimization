@@ -1,5 +1,7 @@
+package parallel.examples;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.variable.Permutation;
@@ -8,15 +10,15 @@ import org.moeaframework.problem.ExternalProblem;
 public class FirewallProblem extends ExternalProblem 
 {
 	private int n = 1000;
-
-	public FirewallProblem() throws IOException 
+	
+	public FirewallProblem() throws UnknownHostException, IOException
 	{
-		super("localhost", ExternalProblem.DEFAULT_PORT);
+		this("localhost", 16801);
 	}
 	
-	public FirewallProblem(int n) throws IOException 
-	{
-		this.n = n;
+	public FirewallProblem(String host, int port) throws IOException, UnknownHostException {
+		super(host, port);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
