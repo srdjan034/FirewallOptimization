@@ -28,6 +28,7 @@
 #define PQ_SIZE         1001    /* must be greater/equal than than MAXV */
 #define TRUE    1
 #define FALSE   0
+#define USE_SOCKET 1
 
 typedef int item_type;
 
@@ -84,27 +85,16 @@ void evaluate(int* vars, double* objs)
  * problem and printing the objectives.
  */
 int main(int argc, char* argv[]) 
-{
-	if (argc <= 1) 
-    {
-		nobjs = 1;
-		nvars = 1000;
-	} 
-    else if (argc >= 3) 
-    {
-		nobjs = atoi(argv[2]);
-		nvars = atoi(argv[1]);
-	} 
+{    
+    const char* port = argv[1];
+
+	nobjs = 1;
+	nvars = 1000;
 
 	int vars[nvars];
 	double objs[nobjs];
 
-
-#ifdef USE_SOCKET
-	MOEA_Init_socket(nobjs, 0, NULL);
-#else
-	MOEA_Init(nobjs, 0);
-#endif
+	MOEA_Init_socket(nobjs, 0, port);
 
 	while (MOEA_Next_solution() == MOEA_SUCCESS) 
     {
@@ -1329,6 +1319,5 @@ float evaluate_permutation(graph *g, int sorted[])
         MINfitness += (g->weight[sorted[i]])*(i+1);
      return(((g->nvertices)*(g->nvertices))/(4*(1.+MINfitness)));
 }
-
 
 
