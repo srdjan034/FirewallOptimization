@@ -1,0 +1,20 @@
+#!/bin/sh
+#PBS -N run_firewall_island
+#PBS -l nodes=1:ppn=1
+#PBS -r n
+#PBS -q batch 
+
+cd $PBS_O_WORKDIR
+
+islandNumber=`python readJsonField.py configuration.json islandNumber`                      # Number of islands in GA
+numberOfEvaluations=`python readJsonField.py configuration.json numberOfEvaluations`        # Number of evaluations
+migrationFrequency=`python readJsonField.py configuration.json migrationFrequency`          # Migration frequency
+igniteHome=`python readJsonField.py configuration.json igniteHome`                          # Ignite home path
+configIgniteFilePath=`python readJsonField.py configuration.json configIgniteFilePath`      # Ignite configuration
+moeaFrameworkPath=`python readJsonField.py configuration.json moeaFrameworkPath`            # MOEA Framework path
+pathToExe=`python readJsonField.py configuration.json pathToExe`                            # Path to the C exe
+
+
+javac -cp ".:$igniteHome/libs/*:$igniteHome/libs/ignite-spring/*:$moeaFrameworkPath/*" FirewallIgniteIslandModel.java
+
+java -cp ".:$igniteHome/libs/*:$igniteHome/libs/ignite-spring/*:$moeaFrameworkPath/*" FirewallIgniteIslandModel $pathToExe $configIgniteFilePath $numberOfEvaluations $migrationFrequency $islandNumber > output.txt

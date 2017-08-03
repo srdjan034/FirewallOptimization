@@ -1,0 +1,11 @@
+{
+    "nodes" : 2,
+    "ppn" : 4,
+    "numberOfEvaluations" : 10000,
+    "migrationFrequency" : 1000,
+    "islandNumber" : 4,
+    "igniteHome" : "/home/snikolic/Automatizacija/libs/apache-ignite",
+    "configIgniteFilePath" : "/home/snikolic/Automatizacija/libs/apache-ignite/config/ignite.xml",
+    "moeaFrameworkPath" : "/home/snikolic/Automatizacija/libs/MOEA-Framework",
+    "pathToExe" : "/home/snikolic/Automatizacija/C_exe/firewall_stdio.exe"
+}
