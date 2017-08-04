@@ -70,6 +70,7 @@ public class FirewallIgniteIslandModel
 		{
 			String[] commands = new String[1];
 			commands[0] = pathToExe;
+			Thread.sleep((islandIndex - 1) * 1000);
 			this.problem = new FirewallProblem(commands);
 			
 			PRNG.setRandom(SynchronizedMersenneTwister.getInstance());
